@@ -1,0 +1,21 @@
+﻿file,level,status,reasons,name,email,phone,skills_found,education_found,quality,label
+Hussain Resume.pdf,,ok,,Muhammad Hussain Tahir,,03363301661,16,0,80,Strong
+Hussain_Resume_ATS_Optimized (1).docx,,ok,,Muhammad Hussain Tahir,mhussain200004@gmail.com,03363301661,17,1,80,Strong
+Hussain_Resume_ATS_Optimized (2).docx,,ok,,Muhammad Hussain Tahir,mhussain200004@gmail.com,03363301661,17,1,80,Strong
+Hussain_Resume_ATS_Optimized.docx,,ok,,Muhammad Hussain Tahir,mhussain200004@gmail.com,03363301661,18,1,45,Weak
+legitimate_resume.pdf,,ok,,John Anderson,john.anderson@email.com,+1 (555) 123-4567,15,1,81,Strong
+Muhammad_Tahir_resume (1).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+Muhammad_Tahir_resume (2).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+Muhammad_Tahir_resume (3).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+Muhammad_Tahir_resume.pdf,,ok,,Muhammad PROFILE,mhussain200004@gmail.com,03363301661,16,0,81,Strong
+resume (1).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+resume (2).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+resume (3).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+resume (4).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+resume (5).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+resume (6).pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+resume.pdf,,rejected,Unsafe file content: /OpenAction,,,,0,0,,
+resume_2_useless_skills.pdf,,ok,,Jenkins Refrigerator,jenkins.r@emailworld.net,,0,0,36,Weak
+resume_3_fictional_companies.pdf,,ok,,Zephyr Moonwhisper,zephyr.moon@aether.cosmos,,0,0,36,Weak
+resume_4_absurd_certifications.pdf,,ok,,Professor Wigglesworth Phd,prof.wiggs@credentials.fake,,1,0,22,Weak
+resume_security_report.pdf,,rejected,"Injected code or suspicious content: html/script, sql injection, prompt injection",,,,0,0,,

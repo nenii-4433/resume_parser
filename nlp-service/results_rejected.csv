@@ -1,0 +1,27 @@
+﻿file,level,status,reasons,name,email,phone,skills_found,education_found,quality,label
+10_SVG_INJECTION (1).pdf,,rejected,Too little text to be a resume,,,,0,0,,
+10_SVG_INJECTION.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+1_SCRIPT_INJECTION.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+2_XSS_INJECTION.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+3_SQL_INJECTION.pdf,,rejected,Injected code or suspicious content: sql injection,,,,0,0,,
+5_DATA_URI_INJECTION.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+6_CODE_INJECTION.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+7_HTML_IFRAME_INJECTION.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+8_GIBBERISH.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+9_BASE64_INJECTION.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+command_injection_resume.pdf,,rejected,Injected code or suspicious content: shell command,,,,0,0,,
+convincing_fake_resume.pdf,,ok,,Sarah Mitchell,sarah.mitchell@email.com,+1 (555) 987-6543,3,3,81,Strong
+Downloads__command_injection_resume.pdf,,rejected,Injected code or suspicious content: shell command,,,,0,0,,
+Downloads__Gibberish_Resume.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+Downloads__mixed_injection_resume.pdf,,rejected,"Injected code or suspicious content: html/script, sql injection, shell command, mongodb operator, code execution",,,,0,0,,
+Downloads__nosql_injection_resume.pdf,,rejected,Injected code or suspicious content: mongodb operator,,,,0,0,,
+Downloads__xxe_injection_resume.pdf,,ok,,John Smith,,,0,0,35,Weak
+Gibberish_Resume.docx,,rejected,Too little text to be a resume,,,,0,0,,
+Gibberish_Resume.pdf,,rejected,Too little text to be a resume,,,,0,0,,
+gibberish_semantic_resume.pdf,,ok,,Blorp Flintwick,blorp@flintwick.example,+99 987654321,1,2,81,Strong
+htmlCode.pdf,,ok,,Targets Live,,,0,0,32,Weak
+mixed_injection_resume.pdf,,rejected,"Injected code or suspicious content: html/script, sql injection, shell command, mongodb operator, code execution",,,,0,0,,
+Muhammad_Hussain_Tahir_INJECTION_TEST.pdf,,rejected,"Injected code or suspicious content: html/script, sql injection, prompt injection",,,,0,0,,
+nosql_injection_resume.pdf,,rejected,Injected code or suspicious content: mongodb operator,,,,0,0,,
+partially_suspicious_resume.pdf,,ok,,Mike Johnson,mike.johnson@email.com,+1 (555) 456-7890,8,1,82,Strong
+xxe_injection_resume.pdf,,ok,,John Smith,,,0,0,35,Weak
