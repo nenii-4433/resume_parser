@@ -30,10 +30,12 @@ DetectorFactory.seed = 0  # make language detection repeatable
 logging.getLogger("pdfminer").setLevel(logging.ERROR)  # hides harmless FontBBox warnings
 
 # ---- limits (tune with your sample resumes) ----
+# Keep a lower threshold for early-career resumes, but still reject junk and
+# clearly non-resume documents.
 MAX_BYTES = 5 * 1024 * 1024
 MAX_UNZIPPED = 50 * 1024 * 1024
 MAX_PAGES = 10
-MIN_WORDS = 50
+MIN_WORDS = 20
 REAL_WORD_REJECT = 0.30   # below this share of real words -> reject
 REAL_WORD_REVIEW = 0.45   # below this -> needs review
 SYMBOL_REJECT = 0.35      # share of non-alphanumeric characters

@@ -41,8 +41,8 @@ SKILLS = {
 AMBIGUOUS_SKILLS = {"Express", "Swift", "Ruby", "Excel", "Render"}
 
 DEGREE_PATTERN = re.compile(
-    r"\b(bachelor|bachelors|master|masters|b\.?sc|m\.?sc|bs|ms|bba|mba|bca|mca|"
-    r"phd|ph\.d|b\.?tech|m\.?tech|diploma|associate degree|intermediate|fsc|f\.sc|"
+    r"\b(bachelor|bachelors|master|masters|b\.?\s*sc|m\.?\s*sc|bs|ms|bba|mba|bca|mca|"
+    r"phd|ph\.?d|b\.?\s*tech|m\.?\s*tech|diploma|associate degree|intermediate|fsc|f\.sc|"
     r"matric|a-levels?|o-levels?)\b",
     re.I,
 )
@@ -100,7 +100,7 @@ def extract_links(text: str) -> tuple[str | None, str | None]:
 
 def _looks_like_name(line: str) -> bool:
     line = line.strip()
-    if not line or len(line) > 40 or re.search(r"[\d@:/|]", line):
+    if not line or len(line) > 60 or re.search(r"[\d@:/|]", line):
         return False
     if re.fullmatch("|".join(SECTION_NAMES.values()), re.sub(r"[^A-Za-z ]", "", line).strip().lower()):
         return False
@@ -108,11 +108,36 @@ def _looks_like_name(line: str) -> bool:
     return 2 <= len(words) <= 4 and all(re.fullmatch(r"[A-Za-z.'-]+", w) for w in words)
 
 
+def _candidate_name_from_line(line: str) -> str | None:
+    line = line.strip()
+    if not line:
+        return None
+
+    # Handle dataset-style lines such as: "... | www.linkedin.com/in/x N. Dani EDUCATION"
+    cleaned = re.sub(r"(?:https?://|www\.)\S+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|\+?\d[\d\s().-]{8,}\d", " ", line, flags=re.I)
+    cleaned = re.split(r"(?i)\b(summary|skills|education|experience|projects?|profile|objective|about me|career objective)\b", cleaned, maxsplit=1)[0]
+    cleaned = re.sub(r"[^A-Za-z .'-]", " ", cleaned)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+
+    if not cleaned or len(cleaned) > 60:
+        return None
+
+    words = [w for w in cleaned.split() if w.lower() not in {"and", "the", "of"}]
+    if not (2 <= len(words) <= 4):
+        return None
+    if not all(re.fullmatch(r"[A-Za-z][A-Za-z.'-]*", w) for w in words):
+        return None
+    return " ".join(words).title() if cleaned.isupper() else " ".join(words)
+
+
 def extract_name(text: str) -> str | None:
-    lines = [l.strip() for l in text.splitlines() if l.strip()][:6]
+    lines = [l.strip() for l in text.splitlines() if l.strip()][:12]
     for line in lines:
         if _looks_like_name(line):
             return line.title() if line.isupper() else line
+        candidate = _candidate_name_from_line(line)
+        if candidate:
+            return candidate
     nlp = _ner()  # fallback: spaCy NER on the top of the document
     if nlp is not None:
         doc = nlp(" ".join(lines)[:400])
@@ -135,11 +160,17 @@ def extract_skills(text: str) -> list[str]:
 
 
 def extract_education(text: str) -> list[dict]:
-    section = find_sections(text).get("education", "")
+    normalized = re.sub(r"(?i)(?<=\S)\s+(education|academic background|qualifications?)\b", "\n\\1", text)
+    normalized = re.sub(r"(?i)(?<=\S)\s+(skills|experience|projects?)\b", "\n\\1", normalized)
+    section = find_sections(normalized).get("education", "")
     entries = []
     for line in section.splitlines():
         if DEGREE_PATTERN.search(line):
             entries.append({"text": line.strip(" -•*\t"), "years": YEAR_PATTERN.findall(line)})
+    if not entries:
+        for line in normalized.splitlines():
+            if DEGREE_PATTERN.search(line):
+                entries.append({"text": line.strip(" -•*\t"), "years": YEAR_PATTERN.findall(line)})
     return entries
 
 

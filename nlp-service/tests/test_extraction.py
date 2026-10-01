@@ -70,3 +70,26 @@ def test_extract_info_combines_everything():
     assert info.github == "github.com/alikhan"
     assert info.linkedin == "linkedin.com/in/ali-khan"
     assert "React" in info.skills
+
+
+def test_real_world_resume_format_extracts_name_and_education():
+    text = """ddani4945@gmail.com | +91 9791197021 | www.linkedin.com/in/n-dani-5522952b6
+N. Dani
+EDUCATION
+Hindustan Institute of Science and Technology
+B. Tech in Computer Science Engineering, CGPA: 9.32
+Chinmaya Vidyalaya Higher Secondary, 94%
+SKILLS
+Python, Java, SQL, Git
+"""
+    info = extract_info(text)
+    assert info.name == "N. Dani"
+    assert len(info.education) >= 1
+    assert any("B. Tech" in item["text"] for item in info.education)
+
+
+def test_real_world_inline_name_pattern_is_detected():
+    text = """ddani4945@gmail.com | +91 9791197021 | www.linkedin.com/in/n-dani-5522952b6 N. Dani EDUCATION Hindustan Institute of Science and Technology B. Tech in Computer Science Engineering, CGPA: 9.32 Chinmaya Vidyalaya Higher Secondary, 94% SKILLS Python, Java, SQL, Git"""
+    info = extract_info(text)
+    assert info.name == "N. Dani"
+    assert len(info.education) >= 1
