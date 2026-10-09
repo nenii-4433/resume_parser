@@ -40,6 +40,10 @@ resume_parser/
 │   │   ├── test_quality.py
 │   │   ├── test_validation.py
 │   │   └── test_web_app.py
+│   ├── build.py
+│   ├── pyproject.toml
+│   ├── requirements.txt
+│   ├── vercel.json
 │   ├── show_text.py
 │   └── results_*.csv
 ├── samples/
@@ -85,11 +89,26 @@ Then open:
 http://127.0.0.1:5000
 ```
 
+## Deploy on Vercel
+
+1. Push this repository to GitHub and import it in Vercel.
+2. Set **Root Directory** to `nlp-service` and leave the framework preset on
+   **Other** (Vercel detects Flask from the Python project files).
+3. Deploy. Vercel uses `pyproject.toml` to load the Flask app and runs
+   `build.py` to install the NLTK WordNet data needed by resume validation.
+4. Open the deployment URL and try a PDF and a DOCX resume.
+
+No environment variables or external database are required. Vercel limits
+function request bodies to 4.5 MB, so uploads are capped at 4 MB to leave room
+for multipart form data. Larger uploads require storing the file externally
+before processing it.
+
 ## Notes
 
 - The project is designed as an MVP for resume parsing and screening.
 - Validation is intentionally strict to avoid accepting junk, spam, or malicious documents.
 - The quality score is based on heuristic checks rather than a production ML model.
+- `requirements.txt` at the repository root installs the Vercel runtime dependencies and pytest for local development.
 
 ## Current verified status
 
@@ -102,5 +121,5 @@ python -m pytest nlp-service/tests -q
 which currently reports:
 
 ```text
-32 passed
+36 passed
 ```

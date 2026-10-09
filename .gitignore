@@ -1,4 +1,6 @@
 .venv/
+nlp-service/venv/
+nlp-service/nltk_data/
 __pycache__/
 *.pyc
 *.pyo

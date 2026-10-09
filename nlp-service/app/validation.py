@@ -11,11 +11,15 @@ import re
 import zipfile
 from dataclasses import dataclass, field
 from functools import lru_cache
+from pathlib import Path
 
 import docx
+import nltk
 import pdfplumber
 from langdetect import DetectorFactory, LangDetectException, detect_langs
 from nltk.corpus import wordnet as wn
+
+nltk.data.path.insert(0, str(Path(__file__).resolve().parents[1] / "nltk_data"))
 
 try:
     from sklearn.feature_extraction.text import TfidfVectorizer
@@ -32,7 +36,7 @@ logging.getLogger("pdfminer").setLevel(logging.ERROR)  # hides harmless FontBBox
 # ---- limits (tune with your sample resumes) ----
 # Keep a lower threshold for early-career resumes, but still reject junk and
 # clearly non-resume documents.
-MAX_BYTES = 5 * 1024 * 1024
+MAX_BYTES = 4 * 1024 * 1024
 MAX_UNZIPPED = 50 * 1024 * 1024
 MAX_PAGES = 10
 MIN_WORDS = 20
@@ -274,7 +278,7 @@ def validate_resume(filename: str, data: bytes) -> ValidationResult:
     if not data:
         return res.reject("File is empty")
     if len(data) > MAX_BYTES:
-        return res.reject("File is too large (max 5 MB)")
+        return res.reject("File is too large (max 4 MB)")
 
     ftype = detect_file_type(data)
     if ftype is None:

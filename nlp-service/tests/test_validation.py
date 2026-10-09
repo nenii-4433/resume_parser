@@ -2,7 +2,7 @@ import io
 
 import docx
 
-from app.validation import OK, REJECTED, classify_resume_text, classify_text, validate_resume
+from app.validation import MAX_BYTES, OK, REJECTED, classify_resume_text, classify_text, validate_resume
 
 GOOD = """Ali Khan
 Email: ali.khan@example.com | Phone: +92 300 1234567
@@ -43,7 +43,9 @@ def test_extension_mismatch_rejected():
 
 
 def test_too_large_rejected():
-    assert validate_resume("cv.pdf", b"%PDF" + b"0" * (6 * 1024 * 1024)).status == REJECTED
+    result = validate_resume("cv.pdf", b"%PDF" + b"0" * MAX_BYTES)
+    assert result.status == REJECTED
+    assert "max 4 MB" in result.reasons[0]
 
 
 def test_pdf_with_javascript_rejected():

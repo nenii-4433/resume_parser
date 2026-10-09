@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 from flask import Flask, render_template, request
+from werkzeug.exceptions import RequestEntityTooLarge
 
 from app.extraction import extract_info
 from app.quality import score_quality
-from app.validation import validate_resume
+from app.validation import MAX_BYTES, validate_resume
 
 
 def create_app() -> Flask:
     app = Flask(__name__, template_folder="templates")
+    app.config["MAX_CONTENT_LENGTH"] = MAX_BYTES + 64 * 1024
 
     @app.route("/", methods=["GET", "POST"])
     def index():
@@ -44,6 +46,14 @@ def create_app() -> Flask:
 
         return render_template("index.html", result=result, error=error)
 
+    @app.errorhandler(RequestEntityTooLarge)
+    def handle_large_upload(_error):
+        return render_template(
+            "index.html",
+            result=None,
+            error="Upload is too large. The maximum file size is 4 MB.",
+        ), 413
+
     return app
 
 
@@ -51,4 +61,4 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

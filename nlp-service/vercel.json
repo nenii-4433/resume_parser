@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "app/web.py": {
+      "excludeFiles": "{tests/**,**/test_*.py,results_*.csv,batch_test.py,show_text.py,try_resume.py}"
+    }
+  }
+}
